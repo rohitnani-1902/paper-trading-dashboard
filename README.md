@@ -33,3 +33,14 @@ Single-file HTML, CSS, and JavaScript.
 ---
 
 Part of [Rohit's GitHub portfolio](https://github.com/rohitnani-1902).
+## Accounting and validation
+
+Orders require a positive safe integer quantity. Fractional, empty, non-finite and oversized inputs are rejected without changing cash or holdings. Insufficient-cash and oversell checks run before account changes. Cash is rounded to whole cents after each trade; average cost retains precision for weighted calculations.
+
+Export journal downloads the current session's messages in chronological order as a text file, including rejected orders. Export before resetting or reloading: the journal is kept only in memory.
+
+## Repeatable checks
+
+Run `node tests/accounting.test.cjs` with Node.js. Checks cover invalid quantities, insufficient cash, overselling, partial and full sales, weighted cost, reset, and 100 repeated buy/sell round trips without cash drift.
+
+Example: buy 10 NOVA at $128.40 → cash $23,716.00 and holdings $1,284.00. Sell four → cash $24,229.60 and six remaining shares. Selling the remaining six restores $25,000.00. Static quotes and zero fees keep total account value unchanged; this verifies bookkeeping, not trading returns.
